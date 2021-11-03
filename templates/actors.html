@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Show me the Movie{% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+    .important {
+        color: #336699;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<h1>Show me the Movie</h1>
+<p class="important">
+    Select a decade:
+</p>
+    
+<form action="/decade" method="POST">
+    
+    <input type="radio" name="decade" id="" value="2021">
+    <label for="">Recent</label> <br>
+    <input type="radio" name="decade" value="2010-2019">
+    <label for="">2010s</label> <br>
+    <input type="radio" name="decade" value="2000-2009">
+    <label for="">2000s</label> <br>
+    <input type="radio" name="decade" id="" value="1990-1999">
+    <label for="">1990s</label> <br>
+    <input type="radio" name="decade" id="" value="1980-1989">
+    <label for="">1980s</label> <br>
+    <input type="radio" name="decade" id="" value="1970-1979">
+    <label for="">1970s</label> <br>
+    <input type="radio" name="decade" value="1960-1969">
+    <label for="">1960s</label> <br>
+    <input type="radio" name="decade" value="1950-1959">
+    <label for="">1950s</label> <br>
+
+    <input type="submit" value="Submit">
+
+</form>
+
+
+
+
+
+
+
+
+{% endblock %}
