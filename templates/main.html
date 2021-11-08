@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Show me the Movie{% endblock %}
+{% block head %}
+{{ super() }}
+
+<style>
+div {
+    display: flex;
+    justify-content: center;
+}
+
+pre {
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap:break-word;
+
+}
+
+
+</style>
+
+{% endblock %}
+{% block content %}
+
+
+
+<div>
+    <form action="/" method="post">
+        <label for="movie">Search a Movie</label>
+        <input type="search" name="movie" id="">
+        <input type="submit" value="Submit">
+    
+    
+    </form>
+
+
+</div>
+   
+
+
+
+{% endblock %}
