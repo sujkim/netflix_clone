@@ -8,55 +8,31 @@
 {% block content %}
 
 
-<div class='container-fluid'>
-    
-    {% if results %}
-
-    {% for result in results %}
-
-    
-
-
-
-    <!-- <img src="{{ result['poster_path'] }}" alt=""> -->
-        <!-- {{result['title']}} <br> -->
-
-        <!-- <img src={{'https://image.tmdb.org/t/p/w500' ~ result['poster_path']}} alt=""> -->
-        
-
-    {% endfor %}
-
-    {% endif %}
-
-
-
-</div>
-
-
-<div class="album py-5 bg-light">
+<div class="album py-5 bg-dark">
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for result in results %}
-        {% if result['poster_path'] %}
-        <div class="col">
-          <div class="card shadow-sm">
+   
+        <!-- <div class="col"> -->
+            {% for result in results %}
+            {% if result['poster_path'] %}
+            <div class="card-group">
+          <div class="card">
             
             <img src={{'https://image.tmdb.org/t/p/w500' ~ result['poster_path']}} alt="">
               
+            <div class="card-body">
+                <p class="card-text">{{result['overview']}}</p>
+                
+              </div>
           </div>
         </div>
-        {% endif %}
-        {% endfor %}
+          {% endif %}
+          {% endfor %}
+        <!-- </div> -->
+      
       </div>
     </div>
   </div>
-
-
-
-
-   
-
-
 
 {% endblock %}
