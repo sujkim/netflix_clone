@@ -3,40 +3,56 @@
 {% block head %}
 {{ super() }}
 
-<style>
-div {
-    display: flex;
-    justify-content: center;
-}
-
-pre {
-    overflow-y: auto;
-    white-space: pre-wrap;
-    word-wrap:break-word;
-
-}
-
-
-</style>
+<link rel="stylesheet" href="/static/styles.css">
 
 {% endblock %}
 {% block content %}
 
 
+{% for genres, movies in collection.items() %}
 
-<div>
-    <form action="/" method="post">
-        <label for="movie">Search a Movie</label>
-        <input type="search" name="movie" id="">
-        <input type="submit" value="Submit">
+
+<div class='row'>
+    <h3>{{genres}}</h3>
+    <div class="row_posters">
+        
+        
+            {% for movie in movies %}
+            <!-- <h4>{{movie['title']}}</h4> -->
+            <img 
+            id = '{{ movie['id'] }}'
+            onclick="select(this)"
+          
+            class="row_poster" 
+            src='{{imageURL ~ movie['poster_path']}}'
+            alt='{{movie['title']}}'>
+            {% endfor %}
+
+    </div>
     
-    
-    </form>
+    <div class='hidden'>
+        <div class='details'></div>
+
+        <div class='genres'></div>
+
+        <div class='overview'></div>
+
+        <div class='script'>
+            <img class='script-img' src="" alt="">
+            <div class='no-script'></div>
+        </div>
+    </div>
 
 
 </div>
-   
 
+
+{% endfor %}
+
+
+<script src='/static/script.js'></script>
 
 
 {% endblock %}
+
+

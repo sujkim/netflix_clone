@@ -3,31 +3,63 @@
 {% block head %}
 {{ super() }}
 
+<style>
+    button {
+        background-color: blue;
+    }
+
+
+
+</style>
+
 
 {% endblock %}
 {% block content %}
 
+{{super()}}
 
-<div class="album py-5 bg-dark">
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-1">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-dark">movies</h1>
+        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        
+      </div>
+    </div>
+  </section>
+
+<div class="album py-5 bg-light">
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
    
         <!-- <div class="col"> -->
-            {% for result in results %}
-            {% if result['poster_path'] %}
+            {% for movie in movies %}
+            {% for script in scripts %}
+           
+            {% if movie['poster_path'] %}
             <div class="card-group">
           <div class="card">
             
-            <img src={{'https://image.tmdb.org/t/p/w500' ~ result['poster_path']}} alt="">
+            <img src={{'https://image.tmdb.org/t/p/w500' ~ movie['poster_path']}} alt="">
               
             <div class="card-body">
-                <p class="card-text">{{result['overview']}}</p>
-                
+                <p class="card-text">{{movie['overview']}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href={{'/script/' ~ script}}><button type="button" class="btn btn-sm btn-outline-secondary">Read Script</button></a>
+                      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Read Script</button> -->
+                      <!-- <a href={{'/script/' ~ script}}>Script</a> -->
+                    </div>
+                    <small class="text-muted">Release Date: {{movie['release_date']}}</small>
+                  </div>
               </div>
           </div>
         </div>
-          {% endif %}
+         
+         {% endif %}
+          {% endfor %}
           {% endfor %}
         <!-- </div> -->
       
