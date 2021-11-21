@@ -47,12 +47,12 @@ h3 {
   width: 100%;
   grid-template-rows: minmax(0, min-content) minmax(0, min-content) minmax(
       0,
-      300px
+      400px
     );
   grid-template-areas:
     "details blank blank"
     "overview overview genres"
-    "script script script";
+    "trailer trailer trailer";
 }
 
 .details {
@@ -64,9 +64,10 @@ h3 {
   white-space: pre;
   color: white;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   padding: 10px;
+  font-size: 18px;
 
   /* display: flex; */
   /* justify-content: flex-start; */
@@ -129,9 +130,25 @@ h3 {
   position: relative;
 }
 
+.trailer {
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  /* white-space: pre-wrap; */
+  /* background-color: antiquewhite; */
+  /* padding-inline: 100px; */
+  /* height: 100%; */
+  /* margin: 0 auto; */
+  grid-area: trailer;
+  min-height: 0;
+  /* object-fit: contain; */
+  position: relative;
+}
+
 .script-img {
   /* object-fit: contain; */
   max-width: 100%;
+  /* width: 80%; */
   max-height: 100%;
   /* display: flex; */
   align-items: center;

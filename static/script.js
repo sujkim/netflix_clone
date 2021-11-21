@@ -13,105 +13,94 @@ async function select(movie) {
 
     // get script
     let scriptResponse = await fetch(`/script/${movie.alt}`);
-    
     let script = await scriptResponse.text();
-    // console.log(movie.id)
 
-
-    // if (script === '') {
-    //     script = '\n\n\n\nNO SCRIPT AVAILABLE'
-        
-    // }
-    // console.log(script);
+    // get trailer
+    let response = await fetch(`/clips/${movie.id}`);
+    let key = await response.text();
 
     // see if popup already there for the selected movie
     let div = movie.parentElement.parentElement.lastElementChild
 
     // if there's already a popup
-    if (div.className === 'selected') {
+    if (div.className !== 'hidden') {
         // check if it's for the selected movie, toggle
         if (div.id === movie.id) {
-            div.remove();
-            // div.className.toggle('hidden');
+            div.className = 'hidden';
+            div.lastElementChild.src = '';
         
         // if different movie, replace popup
         } else {
             div.id = movie.id;
-            div.lastElementChild.innerHTML = script;
+            createPopup(movie, details, key, script);
         } 
-    
-    // create popup
-    }  else {
-        
-        // let popUp = document.createElement('div');    
-
-        // popUp.className = 'selected';
-        // popUp.id = movie.id;
-
-        // // using text
-
-        let span = document.createElement('pre');
-
-        span.innerHTML = script;
-        // popUp.appendChild(span);
-      
-        let container = movie.parentNode.parentNode.lastElementChild
-
-        // div.appendChild(popUp);
-        // console.log(container)
-
-        container.classList.remove('hidden');
-        container.className = 'selected';
-
-
-        // let sections = container.children
-        
-        // console.log(sections)
-
-        // sections[3].appendChild(span);
-
-        // let scriptDiv = container.firstElementChild;
-        // scriptDiv.appendChild(span);
-
-        let detailDiv = container.firstElementChild;
-  
-
-        detailDiv.innerHTML = 
-        details.release_date.slice(0,4).bold() + '\t' +
-        '🎥 ' + details.runtime + 'min' + '\t' + 
-        // 'Runtime: '.bold() + details.runtime + 'min' + '\t' +
-        '⭐ '.bold() + details.vote_average;
-
-        // detailDiv.appendChild(detailSpan);
-
-        // detailDiv.appendChild(details.release_date.slice(0,4).bold() + '\t');
-        // detailDiv.appendChild('🎥 ' + details.runtime + 'min' + '\t');
-        // detailDiv.appendChild('⭐ '.bold() + details.vote_average);
-
-
-        let castDiv = detailDiv.nextElementSibling;
-        // castDiv.innerText = details.genres
-        details.genres.forEach(function (genre) {
-            castDiv.innerText += (genre['name']) + '\n';
-        }) 
-
-        console.log(details.genres);
-
-        let overviewDiv = castDiv.nextElementSibling;
-        overviewDiv.innerHTML = details.overview;
-        console.log(details.overview)
-
-        let scriptDiv = overviewDiv.nextElementSibling;
-
-        if (script !== '') {
-            scriptDiv.appendChild(span) }
-            else {
-                scriptDiv.firstElementChild.src = '/static/script.jpg'
-                scriptDiv.lastElementChild.innerHTML = 'Script Unavailable'.italics();
-            }
-       
-        
-
-
+    } else {
+        div.id = movie.id;
+        createPopup(movie, details, key, script);
     }
+}
+
+
+function createPopup(movie, details, key, script='') {
+
+    // container for script
+    let span = document.createElement('pre');
+
+    span.innerHTML = script;
+    
+    let container = movie.parentNode.parentNode.lastElementChild
+
+    container.classList.remove('hidden');
+    container.className = 'selected';
+
+    let detailDiv = container.firstElementChild;
+
+    detailDiv.innerHTML = 
+    details.release_date.slice(0,4).bold() + '\t' +
+    '🎬 ' + details.runtime + ' min' + '\t' + 
+    '⭐ ' + details.vote_average;
+
+
+    let castDiv = detailDiv.nextElementSibling;
+
+    // remove any current text inside
+    castDiv.innerHTML = ''
+    // let genres = document.createElement('span');
+    details.genres.forEach(function (genre) {
+        castDiv.innerText += (genre['name']) + '\n';
+    }) 
+
+    // castDiv.innerText = genres;
+   
+    
+
+    // console.log(details.genres);
+
+    let overviewDiv = castDiv.nextElementSibling;
+    overviewDiv.innerHTML = details.overview;
+    console.log(details.overview)
+
+    let trailerDiv = overviewDiv.nextElementSibling;
+
+    // if (script !== '') {
+    //     trailerDiv.appendChild(span) }
+    // else {
+    //     // scriptDiv.firstElementChild.src = '/static/script.jpg'
+    //     scriptDiv.innerHTML = 'Script Unavailable'.italics();
+    //     }
+
+    baseURL = 'https://www.youtube.com/embed/'
+    
+    let youTubeVideo = trailerDiv.firstElementChild
+    youTubeVideo.src = baseURL + key + '?autoplay=1'
+
+    console.log(youTubeVideo);
+
+}
+
+async function getTrailer(movie) {
+    let response = await fetch(`/clips/${movie.id}`);
+    let key = await response.text();
+
+    return key;
 }

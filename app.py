@@ -37,40 +37,11 @@ def search_movies(movies):
     return movies_list, scripts
 
 
-# def fetch_scripts():
-#     scripts = []
-
-#     page = requests.get('https://imsdb.com/all-scripts.html')
-#     soup = BeautifulSoup(page.content, "html.parser")
-
-#     # table with all links to scripts
-#     table = soup.table
-#     links_table = table.find_next_sibling('table')
-#     # print(table[1])
-#     # print(cell)
-
-#     # print('yea')
-#     links_row = links_table.find_all('td', {'valign': 'top'})
-#     links = links_row[1]
-#     # print(links)
-
-#     scripts = links.find_all('a')
-#     # print(real_links)
-
-#     titles = []
-#     for script in scripts:
-#         titles.append(script['title'].rsplit(' ', 1)[0])
-
-#     # print(titles)
-#     # return render_template('script.html')
-#     return titles
-
-
 @ app.route("/main", methods=['GET'])
 def main():
     query_string_genres = apiBaseURL + 'genre/movie/list?api_key=' + config.api_key
     response = requests.get(query_string_genres)
-    # 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + config.api_key)
+
     genres_results = response.json()['genres']
 
     params = {
@@ -90,28 +61,61 @@ def main():
     # for each genre, get list of popular movies
     for genre in genres_results:
         params['with_genres'] = str(genre['id'])
-        # fetch_movies = requests.get(query_string + str(genre['id']))
-        # print(params)
+
         fetch_movies = requests.get(query_string, params=params)
         movies_results = fetch_movies.json()['results']
-
-        # check to see if a script exists
-
-        # available_scripts = []
-
-        # for movie in movies_results:
-        #     if movie['title'] in scripts:
-        #         available_scripts.append(movie)
-
-        # available_scripts = search_movies(movies_results)
 
         collection[genre['name']] = movies_results
 
     return render_template('main.html', collection=collection, imageURL="https://image.tmdb.org/t/p/w500")
 
 
-def test():
-    print('AHOY!')
+@ app.route("/script/<title>", methods=['GET'])
+def script(title):
+
+    baseURL = "https://imsdb.com/scripts/"
+
+    if request.method == 'GET':
+        # prepare title for script site
+        title_list = title.split()
+        string = "-".join(title_list)
+
+        # check if script is available, add available scipts
+        page = requests.get(baseURL + string + '.html')
+        soup = BeautifulSoup(page.content, "html.parser")
+        script = soup.pre
+
+        return script.text
+
+
+@ app.route("/select/<string:id>", methods=['GET'])
+def select_movie(id):
+
+    if request.method == 'GET':
+        query_string = apiBaseURL + 'movie/' + \
+            str(id) + '?api_key=' + config.api_key
+
+        response = requests.get(query_string)
+
+        results = response.json()
+
+        return results
+
+
+@ app.route("/clips/<string:id>", methods=['GET'])
+def clips(id):
+    """Return Youtube key to display trailer"""
+
+    fetch_videos = requests.get(
+        apiBaseURL + 'movie/' + id + '/videos?' + 'api_key=' + config.api_key)
+
+    videos = fetch_videos.json()['results']
+
+    for video in videos:
+        if video['type'] == 'Trailer':
+            return video['key']
+        else:
+            return ''
 
 
 @ app.route("/search", methods=['GET', 'POST'])
@@ -163,90 +167,49 @@ def search():
         return render_template('results.html', movies=movies, imageURL=imageURL, scripts=scripts)
 
 
-@ app.route("/select/<int:id>", methods=['GET'])
-def select_movie(id):
+# @ app.route("/genre", methods=['GET', 'POST'])
+# def genre():
+#     # secret_key = app.config.get("SECRET_KEY")
+#     # return f"The configured secret key is {secret_key}."
+#     # return "This is yet another new version!"
 
-    if request.method == 'GET':
-        query_string = apiBaseURL + 'movie/' + \
-            str(id) + '?api_key=' + config.api_key
+#     if request.method == 'GET':
 
-        response = requests.get(query_string)
+#         # send request for list of genres
+#         response = requests.get(
+#             'https://api.themoviedb.org/3/genre/movie/list?api_key=' + config.api_key)
+#         genres = response.json()['genres']
 
-        results = response.json()
+#         return render_template('genres.html', genres=genres)
 
-        # overview = results['overview']
+#     if request.method == 'POST':
 
-        return results
+#         # user inputs
+#         selections = request.form.getlist('genre')
+#         # print(selections)
 
-
-@ app.route("/genre", methods=['GET', 'POST'])
-def genre():
-    # secret_key = app.config.get("SECRET_KEY")
-    # return f"The configured secret key is {secret_key}."
-    # return "This is yet another new version!"
-
-    if request.method == 'GET':
-
-        # send request for list of genres
-        response = requests.get(
-            'https://api.themoviedb.org/3/genre/movie/list?api_key=' + config.api_key)
-        genres = response.json()['genres']
-
-        return render_template('genres.html', genres=genres)
-
-    if request.method == 'POST':
-
-        # user inputs
-        selections = request.form.getlist('genre')
-        # print(selections)
-
-        return redirect('/decade')
+#         return redirect('/decade')
 
 
-@ app.route("/decade", methods=['POST', 'GET'])
-def decade():
-    # secret_key = app.config.get("SECRET_KEY")
-    # return f"The configured secret key is {secret_key}."
-    # return "This is yet another new version!"
+# @ app.route("/decade", methods=['POST', 'GET'])
+# def decade():
+#     # secret_key = app.config.get("SECRET_KEY")
+#     # return f"The configured secret key is {secret_key}."
+#     # return "This is yet another new version!"
 
-    if request.method == 'GET':
+#     if request.method == 'GET':
 
-        # send request for list of decades
-        response = requests.get(
-            'https://api.themoviedb.org/3/genre/movie/list?api_key=' + config.api_key)
-        genres = response.json()['genres']
+#         # send request for list of decades
+#         response = requests.get(
+#             'https://api.themoviedb.org/3/genre/movie/list?api_key=' + config.api_key)
+#         genres = response.json()['genres']
 
-        return render_template('decades.html')
+#         return render_template('decades.html')
 
-    if request.method == 'POST':
+#     if request.method == 'POST':
 
-        # user inputs
-        selections = request.form.get('decade')
-        # print(selections)
+#         # user inputs
+#         selections = request.form.get('decade')
+#         # print(selections)
 
-        return redirect('actors.html')
-
-
-@ app.route("/script/<title>", methods=['GET'])
-def script(title):
-
-    baseURL = "https://imsdb.com/scripts/"
-
-    if request.method == 'GET':
-        # prepare title for script site
-        title_list = title.split()
-        string = "-".join(title_list)
-
-        # check if script is available, add available scipts
-        page = requests.get(baseURL + string + '.html')
-        soup = BeautifulSoup(page.content, "html.parser")
-        script = soup.pre
-
-        # if script.text == '':
-        #     return ''
-        # else:
-        #     return str(script) or ''
-
-        # using text
-        # print(script.text)
-        return script.text
+#         return redirect('actors.html')
