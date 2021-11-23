@@ -49,7 +49,7 @@ def main():
         "include_adult": "false",
         "include_video": "false",
         "page": 1,
-        "with_watch_providers": 8,
+        # "with_watch_providers": 8,
         "watch_region": "US",
         "with_original_language": "en"
         # "year": 1995
@@ -91,15 +91,42 @@ def script(title):
 @ app.route("/select/<string:id>", methods=['GET'])
 def select_movie(id):
 
-    if request.method == 'GET':
-        query_string = apiBaseURL + 'movie/' + \
-            str(id) + '?api_key=' + config.api_key
+    query_string = apiBaseURL + 'movie/' + \
+        str(id) + '?api_key=' + config.api_key
 
-        response = requests.get(query_string)
+    response = requests.get(query_string)
 
-        results = response.json()
+    response = response.json()
 
-        return results
+    print(response['genres'])
+
+    genres = []
+    for genre in response['genres']:
+        genres.append(genre['name'])
+
+    details = {}
+
+    details['year'] = response['release_date'][0:4]
+    details['runtime'] = response['runtime']
+    details['rating'] = str(response['vote_average']) + '/10'
+    details['overview'] = response['overview']
+    details['genres'] = genres
+
+    query_string = apiBaseURL + 'movie/' + \
+        str(id) + '/credits' + '?api_key=' + config.api_key
+
+    response = requests.get(query_string)
+
+    response = response.json()['cast']
+
+    # get first 6 actors
+    actors = []
+    for actor in response[0:6]:
+        actors.append(actor['name'])
+
+    details['cast'] = actors
+
+    return details
 
 
 @ app.route("/clips/<string:id>", methods=['GET'])
@@ -112,10 +139,10 @@ def clips(id):
     videos = fetch_videos.json()['results']
 
     for video in videos:
-        if video['type'] == 'Trailer':
+        if video['type'] == 'Trailer' and video['official'] == True:
             return video['key']
-        else:
-            return ''
+
+    return 'dQw4w9WgXcQ'
 
 
 @ app.route("/search", methods=['GET', 'POST'])
