@@ -1,5 +1,6 @@
 from re import A
 from requests import api
+import random
 import config
 import requests
 import urllib.parse
@@ -44,6 +45,24 @@ def main():
 
     genres_results = response.json()['genres']
 
+    query_string_trending = apiBaseURL + \
+        '/trending/movie/day?api_key=' + config.api_key
+    response = requests.get(query_string_trending)
+
+    trending = response.json()['results']
+
+    # get random movie from list of trending movies
+    # banners_list = list(banners.items())
+    banner = random.choice(trending)
+
+    banner_trailer = clips(str(banner['id']))
+
+    print(banner_trailer)
+
+    while banner_trailer == '':
+        banner = random.choice(trending)
+        banner_trailer = clips(str(banner['id']))
+
     params = {
         "sort_by": "popularity.desc",
         "include_adult": "false",
@@ -67,7 +86,7 @@ def main():
 
         collection[genre['name']] = movies_results
 
-    return render_template('main.html', collection=collection, imageURL="https://image.tmdb.org/t/p/w500")
+    return render_template('main.html', collection=collection, banner=banner, imageURL="https://image.tmdb.org/t/p/", banner_trailer=banner_trailer, trending=trending)
 
 
 @ app.route("/script/<title>", methods=['GET'])
@@ -85,7 +104,12 @@ def script(title):
         soup = BeautifulSoup(page.content, "html.parser")
         script = soup.pre
 
-        return script.text
+        if script:
+            return script.text
+
+        return ''
+
+        # return script.text
 
 
 @ app.route("/select/<string:id>", methods=['GET'])
@@ -140,6 +164,7 @@ def clips(id):
 
     for video in videos:
         if video['type'] == 'Trailer' and video['official'] == True:
+            print(video)
             return video['key']
 
     return 'dQw4w9WgXcQ'

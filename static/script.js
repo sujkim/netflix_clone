@@ -140,7 +140,7 @@ function createPopup(movie, details, key, script='') {
     if (script !== '') {
         scriptDiv.innerHTML = ''
         scriptDiv.appendChild(span) 
-        scriptDiv.style.minHeight = "500px";
+        scriptDiv.style.minHeight = "20px";
     }
    
 
@@ -151,7 +151,7 @@ function createPopup(movie, details, key, script='') {
 
     console.log(key);
 
-    youTubeVideo.src = baseURL + key + '?autoplay=1&mute=1&encryped-media=1'
+    youTubeVideo.src = baseURL + key + '?autoplay=1&mute=1'
 
     // if (key === '') {
     //     trailerDiv.innerHTML = 'Trailer Unavailable' 
