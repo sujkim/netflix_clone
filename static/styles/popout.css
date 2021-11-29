@@ -1,0 +1,131 @@
+.hidden {
+  display: none;
+}
+
+.selected {
+  display: initial;
+  max-height: 80%;
+  overflow-y: auto;
+  display: grid;
+  padding: 10px;
+  column-gap: 20px;
+  grid-template-columns: auto auto minmax(0, 250px);
+  background-color: black;
+  width: 60%;
+  grid-template-rows:
+    minmax(0, min-content) minmax(0, min-content) minmax(0, min-content)
+    minmax(0, min-content) minmax(0, min-content);
+  grid-template-areas:
+    "close close close"
+    "trailer trailer trailer"
+    "details blank blank"
+    "overview overview cast"
+    "overview overview genres"
+    "script script script";
+  z-index: 2;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.selected::-webkit-scrollbar {
+  display: none;
+}
+
+.details {
+  font-family: Arial, Helvetica, sans-serif;
+  grid-area: details;
+  white-space: pre;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.close {
+  display: flex;
+  justify-content: flex-end;
+  grid-area: close;
+  padding-right: 10px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+/* close X */
+.close > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  color: white;
+  border-radius: 50%;
+  background-color: rgb(83, 79, 79);
+}
+
+.trailer {
+  overflow-y: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: trailer;
+  min-height: 400px;
+  object-fit: contain;
+  position: relative;
+  color: white;
+}
+
+.details > span {
+  padding: 10px;
+}
+
+.cast {
+  font-style: italic;
+  font-size: 0.8rem;
+  grid-area: cast;
+  overflow: auto;
+  margin-bottom: 10px;
+  display: flex;
+  color: ghostwhite;
+}
+
+.genres {
+  overflow: auto;
+  grid-area: genres;
+  display: flex;
+  font-style: italic;
+  color: ghostwhite;
+  font-size: 0.8rem;
+}
+
+.overview {
+  color: white;
+  grid-area: overview;
+}
+
+.script {
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+  margin-top: 20px;
+  grid-area: script;
+  max-height: 500px;
+  position: relative;
+}
+
+pre {
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  white-space: pre-wrap;
+  background-color: antiquewhite;
+  width: 100%;
+  margin: 0 auto;
+}

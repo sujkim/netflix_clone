@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block title %}Show me the Movie{% endblock %} {%
+block head %} {{ super() }} {% endblock %} {% block content %} {{super()}} {%
+for genres, shows in collection.items() %}
+
+<div class="row">
+  <h4>{{ genres }}</h4>
+  <div class="row_posters">
+    {% for show in shows %} {% if show['poster_path'] %} <img id ='{{ show['id']
+    }}' onclick="select(this, 'tv')" class="row_poster" src='{{ imageURL ~
+    'w500' ~ show['poster_path'] }}' alt='{{ show['name'] }}'> {% endif %}{%
+    endfor %}
+  </div>
+</div>
+{% endfor %} {% endblock %}

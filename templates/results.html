@@ -1,70 +1,35 @@
-{% extends "base.html" %}
-{% block title %}Show me the Movie{% endblock %}
-{% block head %}
-{{ super() }}
+{% extends "base.html" %} {% block title %}Show me the Movie{% endblock %} {%
+block head %} {{ super() }}
 
 <style>
-    button {
-        background-color: blue;
-    }
-
-
-
+  .container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: min-content;
+    row-gap: 20px;
+  }
+  .results_text {
+    color: white;
+    text-align: center;
+    opacity: 0.8;
+    margin-bottom: 50px;
+  }
 </style>
 
+{% endblock %} {% block content %}
 
-{% endblock %}
-{% block content %}
+<div class="results_text">
+  <p>Showing results for: <em>{{ input }}</em></p>
+</div>
 
-{{super()}}
+<div class="container">
+  {% for media in results %} {% if media['poster_path'] %} {% if
+  media['first_air_date'] %} <img class='row_poster' id='{{media['id']}}'
+  onclick="select(this, 'tv')" src='{{ imageURL ~ 'w780' ~ media['poster_path']
+  }}' alt='{{media['name']}}'> {% else %} <img class='row_poster' id='{{
+  media['id'] }}' onclick="select(this)" src='{{ imageURL ~ 'w780' ~
+  media['poster_path'] }}' alt='{{ media['title'] }}'> {% endif %} {% endif %}
+  {% endfor %}
+</div>
 
-
-  <section class="py-5 text-center container">
-    <div class="row py-lg-1">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-dark">movies</h1>
-        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-        
-      </div>
-    </div>
-  </section>
-
-<div class="album py-5 bg-light">
-    <div class="container">
-
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-   
-        <!-- <div class="col"> -->
-            {% for movie in movies %}
-            {% for script in scripts %}
-           
-            {% if movie['poster_path'] %}
-            <div class="card-group">
-          <div class="card">
-            
-            <img src={{'https://image.tmdb.org/t/p/w500' ~ movie['poster_path']}} alt="">
-              
-            <div class="card-body">
-                <p class="card-text">{{movie['overview']}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                        <a href={{'/script/' ~ script}}><button type="button" class="btn btn-sm btn-outline-secondary">Read Script</button></a>
-                      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Read Script</button> -->
-                      <!-- <a href={{'/script/' ~ script}}>Script</a> -->
-                    </div>
-                    <small class="text-muted">Release Date: {{movie['release_date']}}</small>
-                  </div>
-              </div>
-          </div>
-        </div>
-         
-         {% endif %}
-          {% endfor %}
-          {% endfor %}
-        <!-- </div> -->
-      
-      </div>
-    </div>
-  </div>
-
-{% endblock %}
+{{super()}} {% endblock %}

@@ -1,24 +1,14 @@
 .banner {
   color: white;
   height: 500px;
-  /* background-size: cover; */
-  /* background-repeat: no-repeat; */
-  /* background-position: center center; */
   background-color: black;
-  /* position: absolute; */
-  /* top: 0; */
   position: relative;
 }
 
 .banner_contents {
   margin-left: 40px;
   padding-top: 180px;
-  height: 190px;
-  /* object-fit: scale-down; */
-  /* position: relative; */
   position: absolute;
-  z-index: 1;
-  /* height: 100%; */
 }
 
 .banner_trailer {
@@ -35,12 +25,11 @@
   width: 45rem;
   line-height: 1.2;
   padding-top: 1.5rem;
-  /* font-size: 0.8rem; */
   max-width: 360px;
   height: 80px;
 }
 
-.banner_button {
+/* .banner_button {
   color: white;
   cursor: pointer;
   outline: none;
@@ -59,4 +48,4 @@
   color: black;
   background-color: #e6e6e6;
   transition: all 0.2s;
-}
+} */

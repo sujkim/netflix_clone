@@ -1,68 +1,135 @@
-<!doctype html>
-<html lang="en" class="h-100">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Cover Template · Bootstrap v5.1</title>
+{% extends "base.html" %} {% block title %} {{ super() }}{% endblock %} {% block
+head %} {{ super() }}
+<link rel="stylesheet" href="/static/styles/banner.css" />
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/cover/">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+{% endblock %} {% block content %}
 
-    
+<header class="banner">
+  <!-- <div class="container"> -->
+  <!-- style="background-image: url({{imageURL}}{{banner_path}})";> -->
+  <iframe
+    class="banner_trailer"
+    width="100%"
+    height="500"
+    src="{{'https://www.youtube.com/embed/' ~ banner['trailer'] ~ '?autoplay=1&mute=1&playlist=' ~ banner['trailer'] ~ '&loop=1'}}"
+    frameborder="0"
+  ></iframe>
 
-    <!-- Bootstrap core CSS -->
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <div class="banner_contents">
+    <h1 class="banner_title">{{ banner['title'] }}</h1>
+    <!-- 
+    <div class="banner_buttons">
+      <button class="banner_button">Play</button>
+      <button class="banner_button">My List</button>
+    </div> -->
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="/static/cover.css" rel="stylesheet">
-  </head>
-  <body class="d-flex h-100 text-center text-white bg-dark">
-    
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0">Show me the Movie</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="#">Features</a>
-        <a class="nav-link" href="#">Contact</a>
-      </nav>
+    <div class="banner_description">
+      {{ banner['overview']|truncate(150, False, '...', 0) }}
     </div>
-  </header>
+  </div>
 
-  <main class="px-3">
-    <h1>Cover your page.</h1>
-    <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-    <p class="lead">
-      <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
-    </p>
-  </main>
+  <!-- </div> -->
+</header>
 
-  <footer class="mt-auto text-white-50">
-  </footer>
+<div class="hidden">
+  <div class="close">
+    <span
+      onclick="this.parentElement.parentElement.className = 'hidden';
+      document.getElementsByClassName('trailer')[0].innerHTML='';"
+      >X</span
+    >
+  </div>
+
+  <div class="trailer">
+    <!-- <iframe width="100%" height="390" src="" frameborder="0"></iframe> -->
+  </div>
+
+  <div class="details">
+    <span class="year"></span>
+    <span class="runtime"></span>
+    <span class="rating"></span>
+  </div>
+
+  <div class="cast"></div>
+
+  <div class="genres"></div>
+
+  <div class="overview"></div>
+
+  <div class="script">
+    <img class="script-img" src="" alt="" />
+    <div class="no-script"></div>
+  </div>
 </div>
 
+<div class="row">
+  <h4>Trending</h4>
+  <div class="row_posters">
+    {% for trending_movie in trending %} <img id='{{ trending_movie['id'] }}'
+    onclick = "select(this)" class="row_poster" src="{{ imageURL ~ 'w500' ~
+    trending_movie['poster_path'] }}" alt="{{ trending_movie['title'] }}"
+    style="max-height: 400px" /> {% endfor %}
+  </div>
+</div>
 
-    
-  </body>
-</html>
+<div class="row">
+  <h4>Comedy</h4>
+  <div class="row_posters">
+    {% for movie in movie_collection['Comedy'] %} <img id ='{{ movie['id'] }}'
+    onclick="select(this, 'movie')" class="row_poster" src='{{ imageURL ~ 'w500'
+    ~ movie['poster_path'] }}' alt='{{ movie['title'] }}'> {% endfor %} {% for
+    show in tv_collection['Comedy'] %} <img id ='{{ show['id'] }}'
+    onclick="select(this, 'tv')" class="row_poster" src='{{ imageURL ~ 'w500' ~
+    show['poster_path'] }}' alt='{{ show['name'] }}'> {% endfor %}
+  </div>
+</div>
+
+<div class="row">
+  <h4>Action</h4>
+  <div class="row_posters">
+    {% for movie in movie_collection['Action'] %} <img id ='{{ movie['id'] }}'
+    onclick="select(this, 'movie')" class="row_poster" src='{{imageURL ~ 'w500'
+    ~ movie['poster_path'] }}' alt='{{ movie['title'] }}'> {% endfor %} {% for
+    show in tv_collection['Action'] %} <img id ='{{ show['id'] }}'
+    onclick="select(this, 'tv')" class="row_poster" src='{{ imageURL ~ 'w500' ~
+    show['poster_path'] }}' alt='{{ show['name'] }}'> {% endfor %}
+  </div>
+</div>
+
+<div class="row">
+  <h4>Romance</h4>
+  <div class="row_posters">
+    {% for movie in movie_collection['Romance'] %} <img id ='{{ movie['id'] }}'
+    onclick="select(this, 'movie')" class="row_poster" src='{{ imageURL ~ 'w500'
+    ~ movie['poster_path'] }}' alt='{{ movie['title'] }}'> {% endfor %} {% for
+    show in tv_collection['Romance'] %} <img id ='{{ show['id'] }}'
+    onclick="select(this, 'tv')" class="row_poster" src='{{ imageURL ~ 'w500' ~
+    show['poster_path'] }}' alt='{{ show['name'] }}'> {% endfor %}
+  </div>
+</div>
+
+<div class="row">
+  <h4>Family</h4>
+  <div class="row_posters">
+    {% for movie in movie_collection['Family'] %} <img id ='{{ movie['id'] }}'
+    onclick="select(this, 'movie')" class="row_poster" src='{{ imageURL ~ 'w500'
+    ~ movie['poster_path'] }}' alt='{{ movie['title'] }}'> {% endfor %} {% for
+    show in tv_collection['Family'] %} <img id ='{{ show['id'] }}'
+    onclick="select(this, 'tv')" class="row_poster" src='{{ imageURL ~ 'w500' ~
+    show['poster_path'] }}' alt='{{ show['name'] }}'> {% endfor %}
+  </div>
+</div>
+
+<div class="row">
+  <h4>Drama</h4>
+  <div class="row_posters">
+    {% for movie in movie_collection['Drama'] %} <img id ='{{ movie['id'] }}'
+    onclick="select(this, 'movie')" class="row_poster" src='{{ imageURL ~ 'w500'
+    ~ movie['poster_path'] }}' alt='{{ movie['title'] }}'> {% endfor %} {% for
+    show in tv_collection['Drama'] %} <img id ='{{ show['id'] }}'
+    onclick="select(this, 'tv')" class="row_poster" src='{{ imageURL ~ 'w500' ~
+    show['poster_path'] }}' alt='{{ show['name'] }}'> {% endfor %}
+  </div>
+</div>
+
+{{ super() }} {% endblock %}
