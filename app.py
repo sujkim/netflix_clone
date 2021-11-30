@@ -12,7 +12,7 @@ fetchMoviesURL = apiBaseURL + "discover/movie?api_key="
 fetchTVURL = apiBaseURL + "discover/tv?api_key="
 scriptURL = "https://imsdb.com/scripts/"
 imageURL = "https://image.tmdb.org/t/p/"
-api_key = app.config.get("api_key")
+api_key = os.environ.get('api_key')
 
 
 @ app.route("/", methods=["GET"])
