@@ -1,5 +1,5 @@
 import requests
-import config
+import os
 from bs4 import BeautifulSoup
 from flask import Flask, render_template
 from flask import request
@@ -12,6 +12,7 @@ fetchMoviesURL = apiBaseURL + "discover/movie?api_key="
 fetchTVURL = apiBaseURL + "discover/tv?api_key="
 scriptURL = "https://imsdb.com/scripts/"
 imageURL = "https://image.tmdb.org/t/p/"
+api_key = app.config.get("api_key")
 
 
 @ app.route("/", methods=["GET"])
@@ -28,7 +29,7 @@ def get_media(type):
 
     fetchURL = fetchMoviesURL if type == "movies" else fetchTVURL
 
-    query_string = fetchURL + config.api_key
+    query_string = fetchURL + api_key
 
     collection = {}
 
@@ -42,7 +43,7 @@ def get_media(type):
     }
 
     # get all genres
-    query_string_genres = apiBaseURL + "genre/movie/list?api_key=" + config.api_key
+    query_string_genres = apiBaseURL + "genre/movie/list?api_key=" + api_key
     details = requests.get(query_string_genres)
     genres = details.json()["genres"]
 
@@ -76,7 +77,7 @@ def banner():
 
 def get_trending():
     """Returns trending movies for the day"""
-    query_string = apiBaseURL + "/trending/movie/day?api_key=" + config.api_key
+    query_string = apiBaseURL + "/trending/movie/day?api_key=" + api_key
     details = requests.get(query_string)
 
     trending = details.json()["results"]
@@ -120,7 +121,7 @@ def script(title):
 @ app.route("/select/<string:media_type>/<string:id>", methods=["GET"])
 def select(media_type, id):
     query_string = apiBaseURL + media_type + "/" + \
-        str(id) + "?api_key=" + config.api_key
+        str(id) + "?api_key=" + api_key
 
     fetch_details = requests.get(query_string)
     response = fetch_details.json()
@@ -141,7 +142,7 @@ def select(media_type, id):
 
 def get_cast(media_type, id):
     query_string = apiBaseURL + media_type + "/" + \
-        str(id) + "/credits" + "?api_key=" + config.api_key
+        str(id) + "/credits" + "?api_key=" + api_key
 
     fetch_credits = requests.get(query_string)
     credits = fetch_credits.json()["cast"]
@@ -154,7 +155,7 @@ def clips(media_type, id):
     """Return Youtube key to display official trailer"""
 
     fetch_videos = requests.get(
-        apiBaseURL + media_type + "/" + id + "/videos?" + "api_key=" + config.api_key)
+        apiBaseURL + media_type + "/" + id + "/videos?" + "api_key=" + api_key)
 
     videos = fetch_videos.json()["results"]
 
@@ -187,12 +188,12 @@ def search(search_input):
     }
 
     # search movies
-    query_string = apiBaseURL + "search/movie?api_key=" + config.api_key
+    query_string = apiBaseURL + "search/movie?api_key=" + api_key
     fetch_movies = requests.get(query_string, params=params)
     movies = fetch_movies.json()["results"]
 
     # search shows
-    query_string = apiBaseURL + "search/tv?api_key=" + config.api_key
+    query_string = apiBaseURL + "search/tv?api_key=" + api_key
     fetch_shows = requests.get(query_string, params=params)
     shows = fetch_shows.json()["results"]
 
