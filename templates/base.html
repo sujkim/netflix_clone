@@ -17,16 +17,12 @@
 
     {% endblock %}
 
-    <style>
-        body {
-            background-color: black;
-        }
-    </style>
+
 </head>
 
 <ul>
     <li>
-        <img class="nav_logo" src="/static/notflix.png" alt="" />
+        <a style="all: initial" href="/"><img class="nav_logo" src="/static/notflix.png" alt="" /></a>
     </li>
 
     <li><a href="/">Home</a></li>
@@ -34,7 +30,7 @@
     <li><a href="/shows">TV Shows</a></li>
     <li><a href="/movies">Movies</a></li>
     <div class="search">
-        <li style="margin-right: 10px">
+        <li>
             <div class="collapse collapse-horizontal" id="searchField">
                 <!-- <p style="color: white">testing</p> -->
                 <form action="/search" method="POST">

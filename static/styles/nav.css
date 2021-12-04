@@ -10,12 +10,14 @@ ul {
     justify-content: flex-start;
     align-items: center;
     bottom: 0;
+    width: 100%;
+    margin: 10px;
 }
 
 li a {
     display: block;
     color: white;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -29,13 +31,15 @@ li a:hover:not(.active) {
     display: block;
     width: 115px;
     margin-left: 10px;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 .search {
+    /* align-self: flex-end; */
     display: inline-flex;
     align-items: center;
     margin-left: auto;
+    margin-right: 20px;
 }
 
 .search_input {
@@ -46,16 +50,17 @@ li a:hover:not(.active) {
 
 .search-icon {
     position: absolute;
-    left: 5px;
 }
 
-@media screen and (max-width: 600px) {
-    ul {
+
+@media screen and (max-width: 480px) {
+    .nav_logo {
         margin: 0;
-        width: 100%;
-        width: fit-content;
     }
-    .search_input {
-        width: fit-content;
+
+    ul {
+        margin-left: 0px;
     }
+
+    
 }

@@ -6,7 +6,7 @@ block head %} {{ super() }}
 collection.items() %}
 
 <div class="row">
-  <h4>{{ genres }}</h4>
+  <span class="genre">{{ genres }}</span>
   <div class="row_posters">
     {% for show in shows %} <img id ='{{ show['id'] }}' onclick="select(this,
     'movie')" class="row_poster" src='{{ imageURL ~ 'w500' ~ show['poster_path']

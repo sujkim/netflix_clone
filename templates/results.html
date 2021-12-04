@@ -1,20 +1,6 @@
 {% extends "base.html" %} {% block title %}Show me the Movie{% endblock %} {%
 block head %} {{ super() }}
-
-<style>
-  .container {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: min-content;
-    row-gap: 20px;
-  }
-  .results_text {
-    color: white;
-    text-align: center;
-    opacity: 0.8;
-    margin-bottom: 50px;
-  }
-</style>
+<link rel="stylesheet" href="/static/styles/results.css">
 
 {% endblock %} {% block content %}
 

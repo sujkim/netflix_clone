@@ -15,6 +15,7 @@ imageURL = "https://image.tmdb.org/t/p/"
 api_key = os.environ.get('api_key')
 
 
+
 @ app.route("/", methods=["GET"])
 def main():
 
@@ -170,7 +171,7 @@ def clips(media_type, id):
 def search_show_movie():
     if request.method == "GET":
 
-        return render_template("base.html")
+        return render_template("search.html")
 
     if request.method == "POST":
 
