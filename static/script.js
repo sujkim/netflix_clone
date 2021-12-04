@@ -9,8 +9,8 @@ window.onload = function() {
     var x = this.matchMedia("(max-width: 480px");
     if (x.matches) {
         let searchButton = document.getElementsByClassName("search_icon")[0];
-        // searchButton.removeAttribute("data-bs-toggle");
-        // searchButton.removeAttribute("data-bs-target");
+        searchButton.removeAttribute("data-bs-toggle");
+        searchButton.removeAttribute("data-bs-target");
         searchButton.onclick = () => (window.location.href = "/search");
     }
 };
