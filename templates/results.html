@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}Show me the Movie{% endblock %} {%
 block head %} {{ super() }}
-<link rel="stylesheet" href="/static/styles/results.css">
+<link rel="stylesheet" href="/static/styles/results.css" />
 
 {% endblock %} {% block content %}
 
@@ -8,14 +8,18 @@ block head %} {{ super() }}
   <p>Showing results for: <em>{{ input }}</em></p>
 </div>
 
-<div class="container">
-  {% for media in results %} {% if media['poster_path'] %} {% if
-  media['first_air_date'] %} <img class='row_poster' id='{{media['id']}}'
-  onclick="select(this, 'tv')" src='{{ imageURL ~ 'w780' ~ media['poster_path']
-  }}' alt='{{media['name']}}'> {% else %} <img class='row_poster' id='{{
-  media['id'] }}' onclick="select(this)" src='{{ imageURL ~ 'w780' ~
-  media['poster_path'] }}' alt='{{ media['title'] }}'> {% endif %} {% endif %}
-  {% endfor %}
+<div class="container-fluid">
+  <div class="row row-cols-5">
+    <div class="col">
+      {% for media in results %} {% if media['poster_path'] %} {% if
+      media['first_air_date'] %} <img class='row_poster' id='{{media['id']}}'
+      onclick="select(this, 'tv')" src='{{ imageURL ~ 'w780' ~
+      media['poster_path'] }}' alt='{{media['name']}}'> {% else %} <img
+      class='row_poster' id='{{ media['id'] }}' onclick="select(this)" src='{{
+      imageURL ~ 'w780' ~ media['poster_path'] }}' alt='{{ media['title'] }}'>
+      {% endif %} {% endif %} {% endfor %}
+    </div>
+  </div>
 </div>
 
 {{super()}} {% endblock %}
