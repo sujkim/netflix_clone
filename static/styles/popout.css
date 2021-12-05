@@ -30,7 +30,7 @@
   transform: translate(-50%, -50%);
 }
 
-@media only screen and (max-height: 480px) {
+@media (orientation: landscape) {
   .selected {
     top: 55%;
   }
