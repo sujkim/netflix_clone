@@ -30,20 +30,26 @@
   transform: translate(-50%, -50%);
 }
 
+@media only screen and (max-height: 480px) {
+  .selected {
+    top: 55%;
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .selected {
     width: fit-content;
     grid-template-areas:
-    "close close close"
-    "trailer trailer trailer"
-    "details blank blank"
-    "cast cast cast"
-    "genres genres genres"
-    "overview overview overview"
-    "script script script";
+      "close close close"
+      "trailer trailer trailer"
+      "details blank blank"
+      "cast cast cast"
+      "genres genres genres"
+      "overview overview overview"
+      "script script script";
     grid-template-rows:
-    minmax(0, min-content) minmax(0, min-content) minmax(0, min-content)
-    minmax(0, min-content) minmax(0, min-content);
+      minmax(0, min-content) minmax(0, min-content) minmax(0, min-content)
+      minmax(0, min-content) minmax(0, min-content);
   }
 
   .trailer {
@@ -53,7 +59,6 @@
   iframe {
     height: 180px;
   }
-  
 }
 
 .selected::-webkit-scrollbar {
