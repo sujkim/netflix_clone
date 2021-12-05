@@ -1,24 +1,31 @@
-{% extends "base.html" %} {% block title %}Show me the Movie{% endblock %} {% block head %} {{ super() }}
+{% extends "base.html" %} {% block title %}{{ super() }}{% endblock %} {% block
+head %} {{ super() }}
 
 <style>
-    label {
-        color: white;
-        font-size: 0.7rem;
-    }
-    
-    div {
-        display: flex;
-        justify-content: center;
-        text-align: center;
-    }
+  label {
+    color: white;
+    font-size: 0.7rem;
+  }
+
+  div {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
 </style>
 
 {% endblock %} {% block content %} {{super()}}
 <div>
-    <form action="/search" method="POST">
-        <label for="" class="form-label">Search</label>
-        <input class="form-control form-control-sm search_input" name="search_input" type="text" autocomplete="off" aria-label="" />
-    </form>
+  <form action="/search" method="POST">
+    <label for="" class="form-label">Search</label>
+    <input
+      class="form-control form-control-sm search_input"
+      name="search_input"
+      type="text"
+      autocomplete="off"
+      aria-label=""
+    />
+  </form>
 </div>
 
 {% endblock %}

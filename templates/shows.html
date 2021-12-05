@@ -1,6 +1,6 @@
-{% extends "base.html" %} {% block title %}Show me the Movie{% endblock %} {%
-block head %} {{ super() }} {% endblock %} {% block content %} {{super()}} {%
-for genres, shows in collection.items() %}
+{% extends "base.html" %} {% block title %}{{ super() }}{% endblock %} {% block
+head %} {{ super() }} {% endblock %} {% block content %} {{super()}} {% for
+genres, shows in collection.items() %}
 
 <div class="row">
   <span class="genre">{{genres}}</span>
