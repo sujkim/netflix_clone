@@ -47,6 +47,11 @@ li a:hover:not(.active) {
   align-self: center;
 }
 
+.toggler {
+  outline: none;
+  box-shadow: none;
+}
+
 @media screen and (max-width: 480px) {
   .nav_logo {
     margin-left: 10px;
