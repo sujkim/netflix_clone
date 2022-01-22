@@ -8,8 +8,7 @@ A clone of Netflix created with HTML/CSS and jinja templating with a Python/Flas
 
 
 ## Features
-- Uses TheMovieDatabase API for movie/tv details
-- Uses Youtube API for trailers. 
+- Uses TheMovieDatabase API for movie/tv details, and youtube trailers 
 - Uses a webscraper using The Internet Movie Script Database website to display scripts if available. 
 
 
