@@ -1,7 +1,7 @@
 # Netflix Clone
 
 ## Demo
-[notflixx.herokuapp.com](notflixx.herokuapp.com)
+[https://notflixx.herokuapp.com/](notflixx.herokuapp.com)
 
 ## About
 A clone of Netflix created with HTML/CSS and jinja templating with a Python/Flask backend. 
